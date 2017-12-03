@@ -19,6 +19,7 @@ import javax.mail.Store;
  */
 public class AddressExtractor {
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String[] args) {
 		Properties props = new Properties();
 

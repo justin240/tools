@@ -7,7 +7,7 @@ import com.google.cloud.translate.Translation;
 
 public class TextTranslator {
 
-	private static String MY_PRIVATE_API_KEY = "AIzaSyD9Tdf4h70boLyFotr09M4S4eO6AaQb77s";
+	//private static String MY_PRIVATE_API_KEY = "AIzaSyD9Tdf4h70boLyFotr09M4S4eO6AaQb77s";
 	public static void main(String[] args) {
 		
 		// Instantiates a client
