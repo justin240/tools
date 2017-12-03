@@ -12,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 
 	public static void main(String[] args) {
+		
 		String[] addressList = { "justin@localhost", "test@localhost", "shervin@localhost" };
 		for (int i = 1; i <= 110; i++) {
 			String addr = addressList[(i % addressList.length)];

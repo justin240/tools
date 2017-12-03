@@ -26,15 +26,17 @@ public class ReadEmail {
 	
 	private static final String[] 	HEADER_FILTERS 		= {"ActivityId"};
 	private static final String[] 	FROM_FILTERS 		= {"justin@localhost", "test@localhost", "shervin@localhost"};
+	private static final String 	MAIL_FOLDER_INBOX 	= "INBOX";
 	private static final Boolean 	UNREAD_FILTER 		= Boolean.TRUE;
 	private static final Boolean 	RECENT_MAIL_FILTER 	= Boolean.TRUE;
 	
 
 	public static void main(String[] args) {
-		String host = "localhost";// change accordingly
+		
+		String host = "localhost";
 		String mailStoreType = "imap";
-		String username = "libin@localhost";// change accordingly
-		String password = "libin";// change accordingly
+		String username = "libin@localhost";
+		String password = "libin";
 
 		check(host, mailStoreType, username, password);
 	}
@@ -43,16 +45,10 @@ public class ReadEmail {
 	public static void check(String host, String storeType, final String user, final String password) {
 		try {
 
-			// create properties field
-			Properties props = new Properties();
-
-			// Connect to the server
-			Session session = Session.getDefaultInstance(props, null);
-			Store store = session.getStore(storeType);
-			store.connect(host, user, password);
+			Store store = getMailboxStore(host, storeType, user, password);
 			
 			// create the folder object and open it
-			Folder emailFolder = store.getFolder("INBOX");
+			Folder emailFolder = store.getFolder(MAIL_FOLDER_INBOX);
 
 			emailFolder.open(Folder.READ_ONLY);
 			
@@ -62,9 +58,7 @@ public class ReadEmail {
 			for (int i = 0, n = messages.length; i < n; i++) {
 				
 				String content;
-				
 				Message message = messages[i];
-				
 				Object obj = message.getContent();
 				if(obj instanceof Multipart) {
 					Multipart mp = (Multipart) obj;
@@ -94,6 +88,20 @@ public class ReadEmail {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static Store getMailboxStore(String host, String storeType, final String user, final String password)
+			throws NoSuchProviderException, MessagingException {
+		
+		// create properties field
+		Properties props = new Properties();
+
+		// Connect to the server
+		Session session = Session.getDefaultInstance(props, null);
+		Store store = session.getStore(storeType);
+		store.connect(host, user, password);
+		
+		return store;
 	}
 
 	private static SearchTerm mailFilter() {
